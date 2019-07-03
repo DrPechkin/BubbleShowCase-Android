@@ -6,8 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/BubbleShowCase-Android.iml" filepath="$PROJECT_DIR$/.idea/BubbleShowCase-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bubbleshowcase/bubbleshowcase.iml" filepath="$PROJECT_DIR$/bubbleshowcase/bubbleshowcase.iml" />
-      <module fileurl="file://C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcaseview/bubbleshowcaseview.iml" filepath="C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcaseview/bubbleshowcaseview.iml" />
       <module fileurl="file://C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcase/bubbleshowcaseview.iml" filepath="C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcase/bubbleshowcaseview.iml" />
+      <module fileurl="file://C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcaseview/bubbleshowcaseview.iml" filepath="C:/Users/jcampos/StudioProjects/BubbleShowCase/bubbleshowcaseview/bubbleshowcaseview.iml" />
     </modules>
   </component>
 </project>
