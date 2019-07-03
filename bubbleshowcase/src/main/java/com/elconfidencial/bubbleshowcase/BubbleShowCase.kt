@@ -27,8 +27,8 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
     private val FOREGROUND_LAYOUT_ID = 731
 
     private val DURATION_SHOW_CASE_ANIMATION = 200 //ms
-    private val DURATION_BACKGROUND_ANIMATION = 700 //ms
-    private val DURATION_BEATING_ANIMATION = 700 //ms
+    private val DURATION_BACKGROUND_ANIMATION = 200 //ms
+    private val DURATION_BEATING_ANIMATION = 200 //ms
 
     private val MAX_WIDTH_MESSAGE_VIEW_TABLET = 420 //dp
 
