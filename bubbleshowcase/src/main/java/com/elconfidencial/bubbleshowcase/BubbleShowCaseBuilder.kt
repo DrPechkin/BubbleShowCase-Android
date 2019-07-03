@@ -11,7 +11,10 @@ import java.util.*
 /**
  * Created by jcampos on 04/09/2018.
  */
-class BubbleShowCaseBuilder{
+class BubbleShowCaseBuilder
+/**
+ * Builder constructor. It needs an instance of the current activity to convert it to a weak reference in order to avoid memory leaks
+ */(activity: Activity) {
 
     internal var mActivity: WeakReference<Activity>? = null
     internal var mImage: Drawable? = null
@@ -32,13 +35,11 @@ class BubbleShowCaseBuilder{
     internal var mTargetView: WeakReference<View>? = null
     internal var mBubbleShowCaseListener: BubbleShowCaseListener? = null
     internal var mSequenceShowCaseListener: SequenceShowCaseListener? = null
+    internal var mEnableAnimation: Boolean = true
 
     private var onGlobalLayoutListenerTargetView: ViewTreeObserver.OnGlobalLayoutListener? = null
 
-    /**
-     * Builder constructor. It needs an instance of the current activity to convert it to a weak reference in order to avoid memory leaks
-     */
-    constructor(activity: Activity){
+    init {
         mActivity = WeakReference(activity)
     }
 
@@ -214,6 +215,14 @@ class BubbleShowCaseBuilder{
      */
     fun highlightMode(highlightMode: BubbleShowCase.HighlightMode): BubbleShowCaseBuilder {
         mHighlightMode = highlightMode
+        return this
+    }
+
+    /**
+     * Enable view animation.
+     */
+    fun enableAnimation(enableAnimation: Boolean): BubbleShowCaseBuilder {
+        mEnableAnimation = enableAnimation
         return this
     }
 

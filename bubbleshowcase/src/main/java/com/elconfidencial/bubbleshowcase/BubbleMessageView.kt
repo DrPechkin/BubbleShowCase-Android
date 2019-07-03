@@ -251,6 +251,7 @@ class BubbleMessageView : ConstraintLayout {
         var mSubtitleTextSize: Int? = null
         var mArrowPosition  = ArrayList<BubbleShowCase.ArrowPosition>()
         var mListener: OnBubbleMessageViewListener? = null
+        var mEnableAnimation: Boolean = true
 
         fun from(context: Context): Builder{
             mContext = WeakReference(context)
@@ -310,6 +311,11 @@ class BubbleMessageView : ConstraintLayout {
         fun arrowPosition(arrowPosition: List<BubbleShowCase.ArrowPosition>): Builder {
             mArrowPosition.clear()
             mArrowPosition.addAll(arrowPosition)
+            return this
+        }
+
+        fun enableAnimation(enableAnimation: Boolean): Builder {
+            mEnableAnimation = enableAnimation
             return this
         }
 
