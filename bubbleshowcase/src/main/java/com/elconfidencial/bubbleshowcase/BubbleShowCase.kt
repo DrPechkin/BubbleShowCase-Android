@@ -68,6 +68,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
     private val mTargetView: WeakReference<View>? = builder.mTargetView
     private val mBubbleShowCaseListener: BubbleShowCaseListener? = builder.mBubbleShowCaseListener
     private val mEnableAnimation: Boolean = builder.mEnableAnimation
+    private val mIsCloseOnTouchOutside: Boolean = builder.mIsCloseOnTouchOutside
 
     //Sequence params
     private val mSequenceListener: SequenceShowCaseListener? = builder.mSequenceShowCaseListener
@@ -184,7 +185,10 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
     }
 
     private fun setBackgroundDimListener(backgroundDimLayout: RelativeLayout?) {
-        backgroundDimLayout?.setOnClickListener { mBubbleShowCaseListener?.onBackgroundDimClick(this) }
+        backgroundDimLayout?.setOnClickListener {
+            mBubbleShowCaseListener?.onBackgroundDimClick(this)
+            if (mIsCloseOnTouchOutside) dismiss()
+        }
     }
 
     private fun getBubbleMessageViewBuilder(): BubbleMessageView.Builder {
@@ -192,6 +196,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
             .from(mActivity.get()!!)
             .arrowPosition(mArrowPositionList)
             .backgroundColor(mBackgroundColor)
+            .setCloseOnTouchOutside(mIsCloseOnTouchOutside)
             .textColor(mTextColor)
             .titleTextSize(mTitleTextSize)
             .subtitleTextSize(mSubtitleTextSize)

@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         return BubbleShowCaseBuilder(this)
             .title("Arrow set on right side this time :)")
             .enableAnimation(false)
+            .setCloseOnTouchOutside(false)
             .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT)
             .backgroundColor(ContextCompat.getColor(this, R.color.colorPink))
             .targetView(buttonArrowRightShowCase)

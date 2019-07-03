@@ -71,17 +71,17 @@ class BubbleMessageView : ConstraintLayout {
         showCaseMessageViewLayout = findViewById(R.id.showCaseMessageViewLayout)
     }
 
-    private fun setAttributes(builder: Builder){
-        if(builder.mImage!=null){
+    private fun setAttributes(builder: Builder) {
+        if (builder.mImage != null) {
             imageViewIcon?.visibility = View.VISIBLE
             imageViewIcon?.setImageDrawable(builder.mImage!!)
         }
-        if(builder.mCloseAction!=null){
+        if (builder.mCloseAction != null) {
             imageViewClose?.visibility = View.VISIBLE
             imageViewClose?.setImageDrawable(builder.mCloseAction!!)
         }
 
-        if(builder.mDisableCloseAction!=null && builder.mDisableCloseAction!!){
+        if (builder.mDisableCloseAction != null && builder.mDisableCloseAction!!) {
             imageViewClose?.visibility = View.INVISIBLE
         }
 
@@ -98,19 +98,25 @@ class BubbleMessageView : ConstraintLayout {
             textViewSubtitle?.setTextColor(builder.mTextColor!!)
         }
         builder.mTitleTextSize?.let {
-            textViewTitle?.setTextSize(TypedValue.COMPLEX_UNIT_SP, builder.mTitleTextSize!!.toFloat())
+            textViewTitle?.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                builder.mTitleTextSize!!.toFloat()
+            )
         }
         builder.mSubtitleTextSize?.let {
-            textViewSubtitle?.setTextSize(TypedValue.COMPLEX_UNIT_SP, builder.mSubtitleTextSize!!.toFloat())
+            textViewSubtitle?.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                builder.mSubtitleTextSize!!.toFloat()
+            )
         }
         builder.mBackgroundColor?.let { mBackgroundColor = builder.mBackgroundColor!! }
         arrowPositionList = builder.mArrowPosition
         targetViewScreenLocation = builder.mTargetViewScreenLocation
     }
 
-    private fun setBubbleListener(builder: Builder){
-        imageViewClose?.setOnClickListener {builder.mListener?.onCloseActionImageClick()}
-        itemView?.setOnClickListener {builder.mListener?.onBubbleClick()}
+    private fun setBubbleListener(builder: Builder) {
+        imageViewClose?.setOnClickListener { builder.mListener?.onCloseActionImageClick() }
+        itemView?.setOnClickListener { builder.mListener?.onBubbleClick() }
     }
 
 
@@ -122,7 +128,8 @@ class BubbleMessageView : ConstraintLayout {
 
     private fun getMargin(): Int = ScreenUtils.dpToPx(20)
 
-    private fun getSecurityArrowMargin(): Int = getMargin() + ScreenUtils.dpToPx(2 * WIDTH_ARROW / 3)
+    private fun getSecurityArrowMargin(): Int =
+        getMargin() + ScreenUtils.dpToPx(2 * WIDTH_ARROW / 3)
 
     //END REGION
 
@@ -147,32 +154,50 @@ class BubbleMessageView : ConstraintLayout {
     }
 
     private fun drawRectangle(canvas: Canvas) {
-        val rect = RectF(getMargin().toFloat(),
-                getMargin().toFloat(),
-                getViewWidth() - getMargin().toFloat(),
-                height - getMargin().toFloat())
+        val rect = RectF(
+            getMargin().toFloat(),
+            getMargin().toFloat(),
+            getViewWidth() - getMargin().toFloat(),
+            height - getMargin().toFloat()
+        )
         canvas.drawRoundRect(rect, 10f, 10f, paint!!)
     }
 
-    private fun drawArrow(canvas: Canvas, arrowPosition: BubbleShowCase.ArrowPosition, targetViewLocationOnScreen: RectF?) {
+    private fun drawArrow(
+        canvas: Canvas,
+        arrowPosition: BubbleShowCase.ArrowPosition,
+        targetViewLocationOnScreen: RectF?
+    ) {
         val xPosition: Int
         val yPosition: Int
 
         when (arrowPosition) {
             BubbleShowCase.ArrowPosition.LEFT -> {
                 xPosition = getMargin()
-                yPosition = if(targetViewLocationOnScreen!=null) getArrowVerticalPositionDependingOnTarget(targetViewLocationOnScreen) else height / 2
+                yPosition =
+                    if (targetViewLocationOnScreen != null) getArrowVerticalPositionDependingOnTarget(
+                        targetViewLocationOnScreen
+                    ) else height / 2
             }
             BubbleShowCase.ArrowPosition.RIGHT -> {
                 xPosition = getViewWidth() - getMargin()
-                yPosition = if(targetViewLocationOnScreen!=null) getArrowVerticalPositionDependingOnTarget(targetViewLocationOnScreen) else height / 2
+                yPosition =
+                    if (targetViewLocationOnScreen != null) getArrowVerticalPositionDependingOnTarget(
+                        targetViewLocationOnScreen
+                    ) else height / 2
             }
             BubbleShowCase.ArrowPosition.TOP -> {
-                xPosition = if(targetViewLocationOnScreen!=null) getArrowHorizontalPositionDependingOnTarget(targetViewLocationOnScreen) else width / 2
+                xPosition =
+                    if (targetViewLocationOnScreen != null) getArrowHorizontalPositionDependingOnTarget(
+                        targetViewLocationOnScreen
+                    ) else width / 2
                 yPosition = getMargin()
             }
             BubbleShowCase.ArrowPosition.BOTTOM -> {
-                xPosition = if(targetViewLocationOnScreen!=null) getArrowHorizontalPositionDependingOnTarget(targetViewLocationOnScreen) else width / 2
+                xPosition =
+                    if (targetViewLocationOnScreen != null) getArrowHorizontalPositionDependingOnTarget(
+                        targetViewLocationOnScreen
+                    ) else width / 2
                 yPosition = height - getMargin()
             }
         }
@@ -183,9 +208,14 @@ class BubbleMessageView : ConstraintLayout {
     private fun getArrowHorizontalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
         val xPosition: Int
         when {
-            isOutOfRightBound(targetViewLocationOnScreen) -> xPosition = width - getSecurityArrowMargin()
+            isOutOfRightBound(targetViewLocationOnScreen) -> xPosition =
+                width - getSecurityArrowMargin()
             isOutOfLeftBound(targetViewLocationOnScreen) -> xPosition = getSecurityArrowMargin()
-            else -> xPosition = Math.round(targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(this))
+            else -> xPosition = Math.round(
+                targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(
+                    this
+                )
+            )
         }
         return xPosition
     }
@@ -193,27 +223,40 @@ class BubbleMessageView : ConstraintLayout {
     private fun getArrowVerticalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
         val yPosition: Int
         when {
-            isOutOfBottomBound(targetViewLocationOnScreen) -> yPosition = height - getSecurityArrowMargin()
+            isOutOfBottomBound(targetViewLocationOnScreen) -> yPosition =
+                height - getSecurityArrowMargin()
             isOutOfTopBound(targetViewLocationOnScreen) -> yPosition = getSecurityArrowMargin()
-            else -> yPosition = Math.round(targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(this))
+            else -> yPosition = Math.round(
+                targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(
+                    this
+                )
+            )
         }
         return yPosition
     }
 
     private fun isOutOfRightBound(targetViewLocationOnScreen: RectF?): Boolean {
-        return targetViewLocationOnScreen!!.centerX() > ScreenUtils.getAxisXpositionOfViewOnScreen(this) + width - getSecurityArrowMargin()
+        return targetViewLocationOnScreen!!.centerX() > ScreenUtils.getAxisXpositionOfViewOnScreen(
+            this
+        ) + width - getSecurityArrowMargin()
     }
 
     private fun isOutOfLeftBound(targetViewLocationOnScreen: RectF?): Boolean {
-        return targetViewLocationOnScreen!!.centerX() < ScreenUtils.getAxisXpositionOfViewOnScreen(this) + getSecurityArrowMargin()
+        return targetViewLocationOnScreen!!.centerX() < ScreenUtils.getAxisXpositionOfViewOnScreen(
+            this
+        ) + getSecurityArrowMargin()
     }
 
     private fun isOutOfBottomBound(targetViewLocationOnScreen: RectF?): Boolean {
-        return targetViewLocationOnScreen!!.centerY() > ScreenUtils.getAxisYpositionOfViewOnScreen(this) + height - getSecurityArrowMargin() - ScreenUtils.getStatusBarHeight(context)
+        return targetViewLocationOnScreen!!.centerY() > ScreenUtils.getAxisYpositionOfViewOnScreen(
+            this
+        ) + height - getSecurityArrowMargin() - ScreenUtils.getStatusBarHeight(context)
     }
 
     private fun isOutOfTopBound(targetViewLocationOnScreen: RectF?): Boolean {
-        return targetViewLocationOnScreen!!.centerY() < ScreenUtils.getAxisYpositionOfViewOnScreen(this) + getSecurityArrowMargin() - ScreenUtils.getStatusBarHeight(context)
+        return targetViewLocationOnScreen!!.centerY() < ScreenUtils.getAxisYpositionOfViewOnScreen(
+            this
+        ) + getSecurityArrowMargin() - ScreenUtils.getStatusBarHeight(context)
     }
 
 
@@ -237,7 +280,7 @@ class BubbleMessageView : ConstraintLayout {
     /**
      * Builder for BubbleMessageView class
      */
-    class Builder{
+    class Builder {
         lateinit var mContext: WeakReference<Context>
         var mTargetViewScreenLocation: RectF? = null
         var mImage: Drawable? = null
@@ -249,11 +292,12 @@ class BubbleMessageView : ConstraintLayout {
         var mTextColor: Int? = null
         var mTitleTextSize: Int? = null
         var mSubtitleTextSize: Int? = null
-        var mArrowPosition  = ArrayList<BubbleShowCase.ArrowPosition>()
+        var mArrowPosition = ArrayList<BubbleShowCase.ArrowPosition>()
         var mListener: OnBubbleMessageViewListener? = null
         var mEnableAnimation: Boolean = true
+        var mIsCloseOnTouchOutside: Boolean = true
 
-        fun from(context: Context): Builder{
+        fun from(context: Context): Builder {
             mContext = WeakReference(context)
             return this
         }
@@ -283,7 +327,12 @@ class BubbleMessageView : ConstraintLayout {
             return this
         }
 
-        fun targetViewScreenLocation(targetViewLocationOnScreen: RectF): Builder{
+        fun setCloseOnTouchOutside(isCloseOnTouchOutside: Boolean): Builder {
+            mIsCloseOnTouchOutside = isCloseOnTouchOutside
+            return this
+        }
+
+        fun targetViewScreenLocation(targetViewLocationOnScreen: RectF): Builder {
             mTargetViewScreenLocation = targetViewLocationOnScreen
             return this
         }
@@ -324,7 +373,7 @@ class BubbleMessageView : ConstraintLayout {
             return this
         }
 
-        fun build(): BubbleMessageView{
+        fun build(): BubbleMessageView {
             return BubbleMessageView(mContext.get()!!, this)
         }
     }

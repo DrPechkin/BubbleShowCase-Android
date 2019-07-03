@@ -36,6 +36,7 @@ class BubbleShowCaseBuilder
     internal var mBubbleShowCaseListener: BubbleShowCaseListener? = null
     internal var mSequenceShowCaseListener: SequenceShowCaseListener? = null
     internal var mEnableAnimation: Boolean = true
+    internal var mIsCloseOnTouchOutside: Boolean = true
 
     private var onGlobalLayoutListenerTargetView: ViewTreeObserver.OnGlobalLayoutListener? = null
 
@@ -183,6 +184,14 @@ class BubbleShowCaseBuilder
      */
     fun disableCloseAction(isDisabled: Boolean): BubbleShowCaseBuilder{
         mDisableCloseAction = isDisabled
+        return this
+    }
+
+    /**
+     * Close BubbleShowCase if touch on background
+     */
+    fun setCloseOnTouchOutside(isCloseOnTachOutside: Boolean): BubbleShowCaseBuilder {
+        mIsCloseOnTouchOutside = isCloseOnTachOutside
         return this
     }
 
