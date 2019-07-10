@@ -1,6 +1,6 @@
 # BubbleShowCase - Android
- [ ![Download](https://api.bintray.com/packages/laboratorioec/Laboratorio-apps/BubbleShowCase/images/download.svg) ](https://bintray.com/laboratorioec/Laboratorio-apps/BubbleShowCase/_latestVersion)
- [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-BubbleShowCase-green.svg?style=flat )]( https://android-arsenal.com/details/1/7119 )
+
+This is fork from https://github.com/ECLaboratorio/BubbleShowCase-Android
 
 BubbleShowCase is an elegant and simple framework developed in Kotlin (usable also in Java) that let you to use informative bubbles to help your users pointing out different features of your application or in your App onboarding. The basic use of the framework consists on a target element passed as input which will be highlighted over a translucent background and pointed out by a customizable bubble.
 
@@ -10,9 +10,21 @@ BubbleShowCase is an elegant and simple framework developed in Kotlin (usable al
 
 Add the library into your proyect is really easy, you just need to add this line in dependencies block in your app Gradle:
 ```groovy
-implementation 'com.elconfidencial.bubbleshowcase:bubbleshowcase:LATEST_VERSION'
+implementation 'com.github.DrPechkin:BubbleShowCase-Android:1.0.0'
 ```
-**NOTE:** You can check the LATEST_VERSION in the version badge at the top of this file.
+and add 
+```groovy
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+## The updates in the fork
+* Animation can now be disabled
+* Now the animation is faster
+* Now you can close showCase on click out side
 
 ## Usage
 ### Basic sample
