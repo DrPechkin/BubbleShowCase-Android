@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import java.lang.Exception
 import java.lang.ref.WeakReference
 
 
@@ -102,11 +103,11 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 //If the arrow list is empty, the arrow position is set by default depending on the targetView position on the screen
                 if (mArrowPositionList.isEmpty()) {
                     if (ScreenUtils.isViewLocatedAtHalfTopOfTheScreen(
-                            mActivity.get()!!,
-                            target
-                        )
+                                    mActivity.get()!!,
+                                    target
+                            )
                     ) mArrowPositionList.add(ArrowPosition.TOP) else mArrowPositionList.add(
-                        ArrowPosition.BOTTOM
+                            ArrowPosition.BOTTOM
                     )
                     bubbleMessageViewBuilder = getBubbleMessageViewBuilder()
                 }
@@ -114,9 +115,9 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 if (isVisibleOnScreen(target)) {
                     addTargetViewAtBackgroundDimLayout(target, backgroundDimLayout)
                     addBubbleMessageViewDependingOnTargetView(
-                        target,
-                        bubbleMessageViewBuilder!!,
-                        backgroundDimLayout
+                            target,
+                            bubbleMessageViewBuilder!!,
+                            backgroundDimLayout
                     )
                 } else {
                     dismiss()
@@ -130,10 +131,10 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
             val animation = AnimationUtils.getFadeInAnimation(0, DURATION_BACKGROUND_ANIMATION)
             backgroundDimLayout?.let {
                 rootView.addView(
-                    AnimationUtils.setAnimationToView(
-                        backgroundDimLayout!!,
-                        animation
-                    )
+                        AnimationUtils.setAnimationToView(
+                                backgroundDimLayout!!,
+                                animation
+                        )
                 )
             }
         }
@@ -171,14 +172,14 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
         val backgroundLayout = RelativeLayout(mActivity.get()!!)
         backgroundLayout.id = FOREGROUND_LAYOUT_ID
         backgroundLayout.layoutParams = RelativeLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
         )
         backgroundLayout.setBackgroundColor(
-            ContextCompat.getColor(
-                mActivity.get()!!,
-                R.color.transparent_grey
-            )
+                ContextCompat.getColor(
+                        mActivity.get()!!,
+                        R.color.transparent_grey
+                )
         )
         backgroundLayout.isClickable = true
         return backgroundLayout
@@ -193,29 +194,29 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
 
     private fun getBubbleMessageViewBuilder(): BubbleMessageView.Builder {
         return BubbleMessageView.Builder()
-            .from(mActivity.get()!!)
-            .arrowPosition(mArrowPositionList)
-            .backgroundColor(mBackgroundColor)
-            .setCloseOnTouchOutside(mIsCloseOnTouchOutside)
-            .textColor(mTextColor)
-            .titleTextSize(mTitleTextSize)
-            .subtitleTextSize(mSubtitleTextSize)
-            .title(mTitle)
-            .subtitle(mSubtitle)
-            .enableAnimation(mEnableAnimation)
-            .image(mImage)
-            .closeActionImage(mCloseAction)
-            .disableCloseAction(mDisableCloseAction)
-            .listener(object : OnBubbleMessageViewListener {
-                override fun onBubbleClick() {
-                    mBubbleShowCaseListener?.onBubbleClick(this@BubbleShowCase)
-                }
+                .from(mActivity.get()!!)
+                .arrowPosition(mArrowPositionList)
+                .backgroundColor(mBackgroundColor)
+                .setCloseOnTouchOutside(mIsCloseOnTouchOutside)
+                .textColor(mTextColor)
+                .titleTextSize(mTitleTextSize)
+                .subtitleTextSize(mSubtitleTextSize)
+                .title(mTitle)
+                .subtitle(mSubtitle)
+                .enableAnimation(mEnableAnimation)
+                .image(mImage)
+                .closeActionImage(mCloseAction)
+                .disableCloseAction(mDisableCloseAction)
+                .listener(object : OnBubbleMessageViewListener {
+                    override fun onBubbleClick() {
+                        mBubbleShowCaseListener?.onBubbleClick(this@BubbleShowCase)
+                    }
 
-                override fun onCloseActionImageClick() {
-                    dismiss()
-                    mBubbleShowCaseListener?.onCloseActionImageClick(this@BubbleShowCase)
-                }
-            })
+                    override fun onCloseActionImageClick() {
+                        dismiss()
+                        mBubbleShowCaseListener?.onCloseActionImageClick(this@BubbleShowCase)
+                    }
+                })
     }
 
     private fun isBubbleShowCaseHasBeenShowedPreviously(id: String): Boolean {
@@ -243,8 +244,8 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
      * This function takes a screenshot of the targetView, creating an ImageView from it. This new ImageView is also set on the layout passed by param
      */
     private fun addTargetViewAtBackgroundDimLayout(
-        targetView: View?,
-        backgroundDimLayout: RelativeLayout?
+            targetView: View?,
+            backgroundDimLayout: RelativeLayout?
     ) {
         if (targetView == null) return
 
@@ -258,22 +259,22 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
         }
 
         val targetViewParams = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WRAP_CONTENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         targetViewParams.setMargins(
-            getXposition(targetView),
-            getYposition(targetView),
-            getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width),
-            0
+                getXposition(targetView),
+                getYposition(targetView),
+                getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width),
+                0
         )
         if (mEnableAnimation) {
             backgroundDimLayout?.addView(
-                AnimationUtils.setBouncingAnimation(
-                    targetScreenshotView,
-                    0,
-                    DURATION_BEATING_ANIMATION
-                ), targetViewParams
+                    AnimationUtils.setBouncingAnimation(
+                            targetScreenshotView,
+                            0,
+                            DURATION_BEATING_ANIMATION
+                    ), targetViewParams
             )
         } else {
             backgroundDimLayout?.addView(targetScreenshotView, targetViewParams)
@@ -284,14 +285,14 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
      * This function creates the BubbleMessageView depending the position of the target and the desired arrow position. This new view is also set on the layout passed by param
      */
     private fun addBubbleMessageViewDependingOnTargetView(
-        targetView: View?,
-        bubbleMessageViewBuilder: BubbleMessageView.Builder,
-        backgroundDimLayout: RelativeLayout?
+            targetView: View?,
+            bubbleMessageViewBuilder: BubbleMessageView.Builder,
+            backgroundDimLayout: RelativeLayout?
     ) {
         if (targetView == null) return
         val showCaseParams = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
         )
 
         when (bubbleMessageViewBuilder.mArrowPosition[0]) {
@@ -299,22 +300,22 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
                 if (ScreenUtils.isViewLocatedAtHalfTopOfTheScreen(mActivity.get()!!, targetView)) {
                     showCaseParams.setMargins(
-                        getXposition(targetView) + targetView.width,
-                        getYposition(targetView),
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width) - getMessageViewWidthOnTablet(
-                            getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width)
-                        ) else 0,
-                        0
+                            getXposition(targetView) + targetView.width,
+                            getYposition(targetView),
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width) - getMessageViewWidthOnTablet(
+                                    getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width)
+                            ) else 0,
+                            0
                     )
                     showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_TOP)
                 } else {
                     showCaseParams.setMargins(
-                        getXposition(targetView) + targetView.width,
-                        0,
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width) - getMessageViewWidthOnTablet(
-                            getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width)
-                        ) else 0,
-                        getScreenHeight(mActivity.get()!!) - getYposition(targetView) - targetView.height
+                            getXposition(targetView) + targetView.width,
+                            0,
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width) - getMessageViewWidthOnTablet(
+                                    getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width)
+                            ) else 0,
+                            getScreenHeight(mActivity.get()!!) - getYposition(targetView) - targetView.height
                     )
                     showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 }
@@ -323,22 +324,22 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
                 if (ScreenUtils.isViewLocatedAtHalfTopOfTheScreen(mActivity.get()!!, targetView)) {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) - getMessageViewWidthOnTablet(
-                            getXposition(targetView)
-                        ) else 0,
-                        getYposition(targetView),
-                        getScreenWidth(mActivity.get()!!) - getXposition(targetView),
-                        0
+                            if (isTablet()) getXposition(targetView) - getMessageViewWidthOnTablet(
+                                    getXposition(targetView)
+                            ) else 0,
+                            getYposition(targetView),
+                            getScreenWidth(mActivity.get()!!) - getXposition(targetView),
+                            0
                     )
                     showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_TOP)
                 } else {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) - getMessageViewWidthOnTablet(
-                            getXposition(targetView)
-                        ) else 0,
-                        0,
-                        getScreenWidth(mActivity.get()!!) - getXposition(targetView),
-                        getScreenHeight(mActivity.get()!!) - getYposition(targetView) - targetView.height
+                            if (isTablet()) getXposition(targetView) - getMessageViewWidthOnTablet(
+                                    getXposition(targetView)
+                            ) else 0,
+                            0,
+                            getScreenWidth(mActivity.get()!!) - getXposition(targetView),
+                            getScreenHeight(mActivity.get()!!) - getYposition(targetView) - targetView.height
                     )
                     showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 }
@@ -347,21 +348,21 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_TOP)
                 if (ScreenUtils.isViewLocatedAtHalfLeftOfTheScreen(mActivity.get()!!, targetView)) {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) else 0,
-                        getYposition(targetView) + targetView.height,
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - getMessageViewWidthOnTablet(
-                            getScreenWidth(mActivity.get()!!) - getXposition(targetView)
-                        ) else 0,
-                        0
+                            if (isTablet()) getXposition(targetView) else 0,
+                            getYposition(targetView) + targetView.height,
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - getMessageViewWidthOnTablet(
+                                    getScreenWidth(mActivity.get()!!) - getXposition(targetView)
+                            ) else 0,
+                            0
                     )
                 } else {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) + targetView.width - getMessageViewWidthOnTablet(
-                            getXposition(targetView)
-                        ) else 0,
-                        getYposition(targetView) + targetView.height,
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - targetView.width else 0,
-                        0
+                            if (isTablet()) getXposition(targetView) + targetView.width - getMessageViewWidthOnTablet(
+                                    getXposition(targetView)
+                            ) else 0,
+                            getYposition(targetView) + targetView.height,
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - targetView.width else 0,
+                            0
                     )
                 }
             }
@@ -369,43 +370,43 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
                 showCaseParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 if (ScreenUtils.isViewLocatedAtHalfLeftOfTheScreen(mActivity.get()!!, targetView)) {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) else 0,
-                        0,
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - getMessageViewWidthOnTablet(
-                            getScreenWidth(mActivity.get()!!) - getXposition(targetView)
-                        ) else 0,
-                        getScreenHeight(mActivity.get()!!) - getYposition(targetView)
+                            if (isTablet()) getXposition(targetView) else 0,
+                            0,
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - getMessageViewWidthOnTablet(
+                                    getScreenWidth(mActivity.get()!!) - getXposition(targetView)
+                            ) else 0,
+                            getScreenHeight(mActivity.get()!!) - getYposition(targetView)
                     )
                 } else {
                     showCaseParams.setMargins(
-                        if (isTablet()) getXposition(targetView) + targetView.width - getMessageViewWidthOnTablet(
-                            getXposition(targetView)
-                        ) else 0,
-                        0,
-                        if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - targetView.width else 0,
-                        getScreenHeight(mActivity.get()!!) - getYposition(targetView)
+                            if (isTablet()) getXposition(targetView) + targetView.width - getMessageViewWidthOnTablet(
+                                    getXposition(targetView)
+                            ) else 0,
+                            0,
+                            if (isTablet()) getScreenWidth(mActivity.get()!!) - getXposition(targetView) - targetView.width else 0,
+                            getScreenHeight(mActivity.get()!!) - getYposition(targetView)
                     )
                 }
             }
         }
 
         val bubbleMessageView = bubbleMessageViewBuilder.targetViewScreenLocation(
-            RectF(
-                getXposition(targetView).toFloat(),
-                getYposition(targetView).toFloat(),
-                getXposition(targetView).toFloat() + targetView.width,
-                getYposition(targetView).toFloat() + targetView.height
-            )
+                RectF(
+                        getXposition(targetView).toFloat(),
+                        getYposition(targetView).toFloat(),
+                        getXposition(targetView).toFloat() + targetView.width,
+                        getYposition(targetView).toFloat() + targetView.height
+                )
         )
-            .build()
+                .build()
 
         bubbleMessageView.id = createViewId()
         val animation = AnimationUtils.getScaleAnimation(0, DURATION_SHOW_CASE_ANIMATION)
         backgroundDimLayout?.addView(
-            AnimationUtils.setAnimationToView(
-                bubbleMessageView,
-                animation
-            ), showCaseParams
+                AnimationUtils.setAnimationToView(
+                        bubbleMessageView,
+                        animation
+                ), showCaseParams
         )
     }
 
@@ -413,32 +414,32 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
      * This function creates a BubbleMessageView and it is set on the center of the layout passed by param
      */
     private fun addBubbleMessageViewOnScreenCenter(
-        bubbleMessageViewBuilder: BubbleMessageView.Builder,
-        backgroundDimLayout: RelativeLayout?
+            bubbleMessageViewBuilder: BubbleMessageView.Builder,
+            backgroundDimLayout: RelativeLayout?
     ) {
         val showCaseParams = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         showCaseParams.addRule(RelativeLayout.CENTER_VERTICAL)
         val bubbleMessageView: BubbleMessageView = bubbleMessageViewBuilder.build()
         bubbleMessageView.id = createViewId()
         if (isTablet()) showCaseParams.setMargins(
-            if (isTablet()) getScreenWidth(mActivity.get()!!) / 2 - ScreenUtils.dpToPx(
-                MAX_WIDTH_MESSAGE_VIEW_TABLET
-            ) / 2 else 0,
-            0,
-            if (isTablet()) getScreenWidth(mActivity.get()!!) / 2 - ScreenUtils.dpToPx(
-                MAX_WIDTH_MESSAGE_VIEW_TABLET
-            ) / 2 else 0,
-            0
+                if (isTablet()) getScreenWidth(mActivity.get()!!) / 2 - ScreenUtils.dpToPx(
+                        MAX_WIDTH_MESSAGE_VIEW_TABLET
+                ) / 2 else 0,
+                0,
+                if (isTablet()) getScreenWidth(mActivity.get()!!) / 2 - ScreenUtils.dpToPx(
+                        MAX_WIDTH_MESSAGE_VIEW_TABLET
+                ) / 2 else 0,
+                0
         )
         val animation = AnimationUtils.getScaleAnimation(0, DURATION_SHOW_CASE_ANIMATION)
         backgroundDimLayout?.addView(
-            AnimationUtils.setAnimationToView(
-                bubbleMessageView,
-                animation
-            ), showCaseParams
+                AnimationUtils.setAnimationToView(
+                        bubbleMessageView,
+                        animation
+                ), showCaseParams
         )
     }
 
@@ -458,17 +459,21 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
         val rootView = getViewRoot(mActivity.get()!!)
         val currentScreenView = rootView.getChildAt(0)
         currentScreenView.buildDrawingCache()
-        val bitmap: Bitmap
-        bitmap = Bitmap.createBitmap(
-            currentScreenView.drawingCache,
-            getXposition(targetView),
-            getYposition(targetView),
-            targetView.width,
-            targetView.height
-        )
-        currentScreenView.isDrawingCacheEnabled = false
-        currentScreenView.destroyDrawingCache()
-        return bitmap
+        try {
+            val bitmap: Bitmap
+            bitmap = Bitmap.createBitmap(
+                    currentScreenView.drawingCache,
+                    getXposition(targetView),
+                    getYposition(targetView),
+                    targetView.width,
+                    targetView.height
+            )
+            currentScreenView.isDrawingCacheEnabled = false
+            currentScreenView.destroyDrawingCache()
+            return bitmap
+        } catch (ex:Exception) {
+            return null
+        }
     }
 
     private fun takeScreenshotOfSurfaceView(targetView: View): Bitmap? {
@@ -509,19 +514,19 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder) {
 
     private fun getScreenVerticalOffset(): Int {
         return if (backgroundDimLayout != null) ScreenUtils.getAxisYpositionOfViewOnScreen(
-            backgroundDimLayout!!
+                backgroundDimLayout!!
         ) else 0
     }
 
     private fun getScreenHorizontalOffset(): Int {
         return if (backgroundDimLayout != null) ScreenUtils.getAxisXpositionOfViewOnScreen(
-            backgroundDimLayout!!
+                backgroundDimLayout!!
         ) else 0
     }
 
     private fun getMessageViewWidthOnTablet(availableSpace: Int): Int {
         return if (availableSpace > ScreenUtils.dpToPx(MAX_WIDTH_MESSAGE_VIEW_TABLET)) ScreenUtils.dpToPx(
-            MAX_WIDTH_MESSAGE_VIEW_TABLET
+                MAX_WIDTH_MESSAGE_VIEW_TABLET
         ) else availableSpace
     }
 
